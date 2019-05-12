@@ -4,6 +4,11 @@
   "main": "index.js",
   "author": "flatcoke89@gmail.com",
   "license": "MIT",
+  "scripts": {
+    "build": "webpack --entry ./app/public/js/index.js --output-filename bundle.min.js --output-path ./app/public/js ",
+    "start": "nodemon --exec babel-node server.js",
+    "sequelize": "sequelize"
+  },
   "dependencies": {
     "apollo-boost": "^0.3.1",
     "apollo-server-express": "^2.5.0",
