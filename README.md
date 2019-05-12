@@ -1,3 +1,4 @@
+### Setup and run
 ```console
 $ docker-compose up -d (It can take some time when first up)
 $ yarn
