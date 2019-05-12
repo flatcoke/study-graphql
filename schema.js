@@ -11,6 +11,14 @@ export default `
     userId: ID!
     user: User!
   }
+  type Comment {
+    id: ID!
+    content: String!
+    userId: ID!
+    user: User!
+    postId: ID!
+    post: Post!
+  }
   type Query {
     posts: [Post!]!
     post(id: ID!): Post
@@ -22,5 +30,8 @@ export default `
     createPost(title: String, content:String!, userId: ID!): Post!
     updatePost(id: ID!, title: String, content:String!): [Int!]!
     deletePost(id: ID!): Int!
+    createComment(content:String!, userId: ID!, postId: ID!): Comment!
+    updateComment(id: ID!, content:String!): [Int!]!
+    deleteComment(id: ID!): Int!
   }
 `;
