@@ -24,7 +24,7 @@ module.exports = (Sequelize, DataTypes) => {
     {
       tableName: "users",
       defaultScope: {
-        attributes: ["id", "createdAt", "updatedAt"]
+        attributes: ["id", "username", "createdAt", "updatedAt"]
       }
     }
   );
