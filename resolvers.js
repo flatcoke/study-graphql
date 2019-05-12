@@ -8,8 +8,8 @@ export default {
   Query: {
     posts: (parent, args, { db }, info) => db.Post.findAll(),
     users: (parent, args, { db }, info) => db.User.findAll(),
-    post: (parent, { id }, { db }, info) => db.Post.findById(id),
-    user: (parent, { id }, { db }, info) => db.User.findById(id)
+    post: (parent, { id }, { db }, info) => db.Post.findByPk(id),
+    user: (parent, { id }, { db }, info) => db.User.findByPk(id)
   },
   Mutation: {
     createPost: (parent, { title, content, userId }, { db }, info) =>
