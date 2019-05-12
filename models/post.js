@@ -15,7 +15,7 @@ module.exports = (Sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: true,
       },
-      userId: { field: 'user_id', type: DataTypes.INTEGER },
+      userId: { field: 'user_id', type: DataTypes.INTEGER.UNSIGNED },
       createdAt: { field: 'created_at', type: DataTypes.DATE },
       updatedAt: { field: 'updated_at', type: DataTypes.DATE },
     },
@@ -34,6 +34,13 @@ module.exports = (Sequelize, DataTypes) => {
       onDelete: 'CASCADE',
     })
   }
+  Post.associate = models => {
+    Post.hasMany(models.Comment, {
+      foreignKey: "postId",
+      as: "comments",
+      onDelete: "CASCADE"
+    });
+  };
 
   return Post
 }
