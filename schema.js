@@ -18,6 +18,7 @@ export default `
     users: [User!]!
   }
   type Mutation {
+    createUser(username: String): User!
     createPost(title: String, content:String!, userId: ID!): Post!
     updatePost(id: ID!, title: String, content:String!): [Int!]!
     deletePost(id: ID!): Int!

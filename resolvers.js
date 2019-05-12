@@ -12,6 +12,10 @@ export default {
     user: (parent, { id }, { db }, info) => db.User.findByPk(id)
   },
   Mutation: {
+    createUser: (parent, { username }, { db }, info) =>
+      db.User.create({
+        username: username
+      }),
     createPost: (parent, { title, content, userId }, { db }, info) =>
       db.Post.create({
         title: title,
