@@ -18,6 +18,7 @@ module.exports = (Sequelize, DataTypes) => {
     },
     {
       tableName: "comments",
+      timestamps: true,
       defaultScope: {
         limit: 10,
         order: [['createdAt', 'desc']]

@@ -1,11 +1,11 @@
-import express from "express";
 import { ApolloServer, gql } from "apollo-server-express";
-import faker from "faker";
-import times from "lodash.times";
-import random from "lodash.random";
-import typeDefs from "./schema";
-import resolvers from "./resolvers";
+import bodyParser from "body-parser";
+import express from "express";
+
 import db from "./models";
+import resolvers from "./resolvers";
+import apiRouter from "./routes";
+import typeDefs from "./schema";
 
 const server = new ApolloServer({
   typeDefs: gql(typeDefs),
@@ -14,27 +14,13 @@ const server = new ApolloServer({
 });
 
 const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 server.applyMiddleware({ app });
 
 app.use(express.static("app/public"));
+app.use("/api", apiRouter);
 
-db.sequelize.sync().then(() => {
-  // populate author table with dummy data
-  db.User.bulkCreate(
-    times(10, () => ({
-      username: faker.internet.userName()
-    }))
-  );
-  // populate post table with dummy data
-  db.Post.bulkCreate(
-    times(50, () => ({
-      title: faker.lorem.sentence(),
-      content: faker.lorem.paragraph(),
-      userId: random(1, 10)
-    }))
-  );
-
-  app.listen({ port: 5000 }, () =>
-    console.log(`🚀 Server ready at http://localhost:5000${server.graphqlPath}`)
-  );
-});
+app.listen({ port: 5000 }, () =>
+  console.log(`🚀 Server ready at http://localhost:5000${server.graphqlPath}`)
+);
