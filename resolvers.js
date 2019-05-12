@@ -1,3 +1,12 @@
+import Sequelize from "sequelize";
+
+const paginateAfter = (after, limit) => {
+  limit;
+  return after
+    ? { limit: limit, where: { id: { [Sequelize.Op.lt]: after } } }
+    : { limit: limit };
+};
+
 export default {
   User: {
     posts: (parent, args, context, info) => parent.getPosts(),
@@ -12,9 +21,18 @@ export default {
     post: (parent, args, context, info) => parent.getpost()
   },
   Query: {
-    users: (parent, args, { db }, info) => db.User.findAll(),
-    posts: (parent, args, { db }, info) => db.Post.findAll(),
-    comments: (parent, args, { db }, info) => db.Comment.findAll(),
+    users: (parent, { after, limit = 10 }, { db }, info) => {
+      const cursorAfter = paginateAfter(after, limit);
+      return db.User.findAll({ ...cursorAfter });
+    },
+    posts: (parent, { after, limit = 10 }, { db }, info) => {
+      const cursorAfter = paginateAfter(after, limit);
+      return db.Post.findAll({ ...cursorAfter });
+    },
+    comments: (parent, { after, limit = 10 }, { db }, info) => {
+      const cursorAfter = paginateAfter(after, limit);
+      return db.Comment.findAll({ ...cursorAfter });
+    },
     user: (parent, { id }, { db }, info) => db.User.findByPk(id),
     post: (parent, { id }, { db }, info) => db.Post.findByPk(id),
     comment: (parent, { id }, { db }, info) => db.Comment.findByPk(id)

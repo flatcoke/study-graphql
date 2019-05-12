@@ -23,11 +23,11 @@ export default `
   }
   type Query {
     user(id: ID!): User
-    users: [User!]!
+    users(after: ID, limit: Int): [User!]!
     post(id: ID!): Post
-    posts: [Post!]!
+    posts(after: ID, limit: Int): [Post!]!
     comment(id: ID!): Comment
-    comments: [Comment!]!
+    comments(after: ID, limit: Int): [Comment!]!
   }
   type Mutation {
     createUser(username: String): User!

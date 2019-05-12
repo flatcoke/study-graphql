@@ -21,7 +21,7 @@ module.exports = (Sequelize, DataTypes) => {
       timestamps: true,
       defaultScope: {
         limit: 10,
-        order: [['createdAt', 'desc']]
+        order: [['id', 'desc']]
       }
     }
   );

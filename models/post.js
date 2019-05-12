@@ -21,9 +21,10 @@ module.exports = (Sequelize, DataTypes) => {
     },
     {
       tableName: "posts",
+      timestamps: true,
       defaultScope: {
         limit: 10,
-        order: [['createdAt', 'desc']]
+        order: [['id', 'desc']]
       }
     }
   );

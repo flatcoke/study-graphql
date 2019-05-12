@@ -27,7 +27,7 @@ module.exports = (Sequelize, DataTypes) => {
       defaultScope: {
         attributes: ["id", "username", "createdAt", "updatedAt"],
         limit: 10,
-        order: [["createdAt", "DESC"]]
+        order: [["id", "DESC"]]
       }
     }
   );
