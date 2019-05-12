@@ -7,6 +7,17 @@ module.exports = (Sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true
       },
+      username: {
+        type: DataTypes.STRING(30),
+        unique: {
+          args: true,
+          msg: "The username is already in use"
+        },
+        validate: {
+          is: /^[a-z0-9\_\-]+$/i,
+          notEmpty: { msg: "Username can not be null" }
+        }
+      },
       createdAt: { field: "created_at", type: DataTypes.DATE },
       updatedAt: { field: "updated_at", type: DataTypes.DATE }
     },
