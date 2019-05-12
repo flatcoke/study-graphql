@@ -1,15 +1,23 @@
 export default {
   User: {
-    posts: (parent, args, context, info) => parent.getPosts()
+    posts: (parent, args, context, info) => parent.getPosts(),
+    comments: (parent, args, context, info) => parent.getComments()
   },
   Post: {
-    user: (parent, args, context, info) => parent.getUser()
+    user: (parent, args, context, info) => parent.getUser(),
+    comments: (parent, args, context, info) => parent.getComments()
+  },
+  Comment: {
+    user: (parent, args, context, info) => parent.getUser(),
+    post: (parent, args, context, info) => parent.getpost()
   },
   Query: {
-    posts: (parent, args, { db }, info) => db.Post.findAll(),
     users: (parent, args, { db }, info) => db.User.findAll(),
+    posts: (parent, args, { db }, info) => db.Post.findAll(),
+    comments: (parent, args, { db }, info) => db.Comment.findAll(),
+    user: (parent, { id }, { db }, info) => db.User.findByPk(id),
     post: (parent, { id }, { db }, info) => db.Post.findByPk(id),
-    user: (parent, { id }, { db }, info) => db.User.findByPk(id)
+    comment: (parent, { id }, { db }, info) => db.Comment.findByPk(id)
   },
   Mutation: {
     createUser: (parent, { username }, { db }, info) =>
@@ -22,7 +30,7 @@ export default {
         content: content,
         userId: userId
       }),
-    updatePost: (parent, { title, content, id }, { db }, info) =>
+    updatePost: (parent, { id, title, content }, { db }, info) =>
       db.Post.update(
         {
           title: title,
@@ -36,6 +44,29 @@ export default {
       ),
     deletePost: (parent, { id }, { db }, info) =>
       db.Post.destroy({
+        where: {
+          id: id
+        }
+      }),
+    createComment: (parent, { content, userId, postId }, { db }, info) =>
+      db.Comment.create({
+        content: content,
+        userId: userId,
+        postId: postId
+      }),
+    updateComment: (parent, { id, content }, { db }, info) =>
+      db.Comment.update(
+        {
+          content: content
+        },
+        {
+          where: {
+            id: id
+          }
+        }
+      ),
+    deleteComment: (parent, { id }, { db }, info) =>
+      db.Comment.destroy({
         where: {
           id: id
         }
