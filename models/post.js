@@ -1,40 +1,39 @@
 module.exports = (Sequelize, DataTypes) => {
   const Post = Sequelize.define(
-    'Post',
+    "Post",
     {
       id: {
         type: DataTypes.INTEGER.UNSIGNED,
         primaryKey: true,
-        autoIncrement: true,
+        autoIncrement: true
       },
       title: {
         type: DataTypes.STRING(255),
-        allowNull: false,
+        allowNull: false
       },
       content: {
         type: DataTypes.TEXT,
-        allowNull: true,
+        allowNull: true
       },
-      userId: { field: 'user_id', type: DataTypes.INTEGER.UNSIGNED },
-      createdAt: { field: 'created_at', type: DataTypes.DATE },
-      updatedAt: { field: 'updated_at', type: DataTypes.DATE },
+      userId: { field: "user_id", type: DataTypes.INTEGER.UNSIGNED },
+      createdAt: { field: "created_at", type: DataTypes.DATE },
+      updatedAt: { field: "updated_at", type: DataTypes.DATE }
     },
     {
-      tableName: 'posts',
+      tableName: "posts",
       defaultScope: {
         limit: 10,
-      },
+        order: [['createdAt', 'desc']]
+      }
     }
-  )
+  );
 
   Post.associate = models => {
     Post.belongsTo(models.User, {
-      foreignKey: 'userId',
-      as: 'user',
-      onDelete: 'CASCADE',
-    })
-  }
-  Post.associate = models => {
+      foreignKey: "userId",
+      as: "user",
+      onDelete: "CASCADE"
+    });
     Post.hasMany(models.Comment, {
       foreignKey: "postId",
       as: "comments",
@@ -42,5 +41,5 @@ module.exports = (Sequelize, DataTypes) => {
     });
   };
 
-  return Post
-}
+  return Post;
+};

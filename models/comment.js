@@ -19,7 +19,8 @@ module.exports = (Sequelize, DataTypes) => {
     {
       tableName: "comments",
       defaultScope: {
-        limit: 10
+        limit: 10,
+        order: [['createdAt', 'desc']]
       }
     }
   );
@@ -30,8 +31,7 @@ module.exports = (Sequelize, DataTypes) => {
       as: "user",
       onDelete: "CASCADE"
     });
-  };
-  Comment.associate = models => {
+
     Comment.belongsTo(models.Post, {
       foreignKey: "postId",
       as: "post",

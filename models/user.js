@@ -24,7 +24,8 @@ module.exports = (Sequelize, DataTypes) => {
     {
       tableName: "users",
       defaultScope: {
-        attributes: ["id", "username", "createdAt", "updatedAt"]
+        attributes: ["id", "username", "createdAt", "updatedAt"],
+        order: [['createdAt', 'DESC']]
       }
     }
   );
@@ -35,8 +36,7 @@ module.exports = (Sequelize, DataTypes) => {
       as: "posts",
       onDelete: "CASCADE"
     });
-  };
-  User.associate = models => {
+
     User.hasMany(models.Comment, {
       foreignKey: "userId",
       as: "comments",
